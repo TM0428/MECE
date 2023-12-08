@@ -2,6 +2,7 @@ import os
 from PyQt6.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QDialog
 from PyQt6.QtGui import QIcon, QAction
 from typing import Final
+import qdarktheme
 
 
 class MainWindow(QMainWindow):
@@ -102,6 +103,7 @@ class MainWindow(QMainWindow):
 
 def main():
     app = QApplication([])
+    qdarktheme.setup_theme()
     win = MainWindow()
     win.show()
     app.exec()

@@ -45,6 +45,30 @@ def pack_epub(foldername: str, filename: str) -> None:
     print("EPUB packing end.")
 
 
+def filename_changer(path: str, name_rule: str = "0{index}.{ext}") -> None:
+    """
+    フォルダパス内のファイルをname_ruleに従ってリネームする
+    name_ruleは、{index}と{ext}を含む必要がある
+    {index}は、ファイルのインデックス番号
+    {ext}は、ファイルの拡張子
+    例:name_rule="0{index}.{ext}"の場合、01.jpg, 02.jpg, 03.jpg, ...
+    """
+    import os
+    import glob
+
+    files = glob.glob(path + "/*")
+    for i, f in enumerate(files, 1):
+        root, ext = os.path.splitext(f)
+        # extの先頭から.を削除
+        ext = ext[1:]
+        # 全体数だけの桁数を取得
+        digit = len(str(len(files)))
+        # ファイル名を変更
+        os.rename(
+            f, os.path.join(path, name_rule.format(index=str(i).zfill(digit), ext=ext))
+        )
+
+
 class ExtendedEpubBook(EpubBook):
     def __init__(self):
         super().__init__()
@@ -299,3 +323,7 @@ def read_epub(name: str, options=None) -> ExtendedEpubBook:
     reader.process()
 
     return book
+
+
+def main():
+    filename_changer("C:\\tmp")

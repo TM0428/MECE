@@ -1,4 +1,5 @@
-__pycache__/
+MECE/__pycache__/
+*.pyc
 .vscode/
 data/
 *.epub
